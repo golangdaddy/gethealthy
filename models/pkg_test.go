@@ -11,7 +11,7 @@ func TestPackage(t *testing.T) {
 
 	user := DemoUser()
 
-	thread := user.NewThread("DOOM BREAK: WATCH THIS KITTEN VIDEO")
+	thread := user.NewThread("Kent", "DOOM BREAK: WATCH THIS KITTEN VIDEO")
 
 	reply := thread.Reply(user, "hey watch this video")
 

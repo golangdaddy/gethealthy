@@ -40,11 +40,12 @@ type ForumUser struct {
 	Timestamp int64    `json:"timestamp"`
 }
 
-func (user *ForumUser) NewThread(title string) *Thread {
+func (user *ForumUser) NewThread(region, title string) *Thread {
 	return &Thread{
 		ID:        uuid.NewString(),
 		Creator:   *user,
 		Title:     title,
+		Region:    region,
 		Timestamp: getTime(),
 	}
 }
