@@ -1,4 +1,4 @@
-module github.com/golangdaddy/gethealthy/models
+module github.com/golangdaddy/gethealthy
 
 go 1.20
 
