@@ -40,19 +40,20 @@ type ForumUser struct {
 	Timestamp int64    `json:"timestamp"`
 }
 
-func (user *ForumUser) NewThread(region, title string) *Thread {
+func (user *ForumUser) NewThread(parent, title string) *Thread {
 	return &Thread{
 		ID:        uuid.NewString(),
 		Creator:   *user,
 		Title:     title,
-		Region:    region,
+		Parent:    parent,
 		Timestamp: getTime(),
 	}
 }
 
 type Thread struct {
+	Type         string         `json:"_"`
+	Parent       string         `json:"parent"`
 	ID           string         `json:"id"`
-	Region       string         `json:"region"`
 	Creator      ForumUser      `json:"creator"`
 	Title        string         `json:"title"`
 	CountReplies int64          `json:"countReplies"`
