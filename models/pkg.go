@@ -2,9 +2,11 @@ package models
 
 import (
 	"fmt"
+	"net/http"
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/sirchorg/go/cloudfunc"
 )
 
 func getTime() int64 {
@@ -13,6 +15,16 @@ func getTime() int64 {
 
 type OTP struct {
 	Email string
+}
+
+func AssertKeyValue(w http.ResponseWriter, m map[string]interface{}, key string) (string, bool) {
+	s, ok := m[key].(string)
+	if !ok {
+		err := fmt.Errorf("request must have: %s", key)
+		cloudfunc.HttpError(w, err, http.StatusBadRequest)
+		return s, false
+	}
+	return s, true
 }
 
 func DemoUser() *ForumUser {
