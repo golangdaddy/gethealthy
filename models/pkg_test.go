@@ -14,6 +14,7 @@ func TestPackage(t *testing.T) {
 	thread := user.NewThread("Kent", "DOOM BREAK: WATCH THIS KITTEN VIDEO")
 
 	reply := thread.Reply(user, "hey watch this video")
+	reply.ThreadID()
 
 	assert.NotNil(reply)
 	assert.Len(thread.ID, 36)

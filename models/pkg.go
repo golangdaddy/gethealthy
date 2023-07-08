@@ -3,6 +3,7 @@ package models
 import (
 	"fmt"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -20,7 +21,7 @@ type OTP struct {
 func AssertKeyValue(w http.ResponseWriter, m map[string]interface{}, key string) (string, bool) {
 	s, ok := m[key].(string)
 	if !ok {
-		err := fmt.Errorf("request must have: %s", key)
+		err := fmt.Errorf("'%s' is required for this request", key)
 		cloudfunc.HttpError(w, err, http.StatusBadRequest)
 		return s, false
 	}
@@ -88,4 +89,8 @@ type ThreadReply struct {
 	Creator   ForumUser `json:"creator"`
 	Content   string    `json:"content"`
 	Timestamp int64     `json:"timestamp"`
+}
+
+func (reply *ThreadReply) ThreadID() string {
+	return strings.Split(reply.ID, "_")[0]
 }
