@@ -64,15 +64,15 @@ func (user *ForumUser) NewThread(parent, title string) *Thread {
 }
 
 type Thread struct {
-	Type         string         `json:"_"`
-	Parent       string         `json:"parent"`
-	ID           string         `json:"id"`
-	Creator      ForumUser      `json:"creator"`
-	Title        string         `json:"title"`
-	CountReplies int64          `json:"countReplies"`
-	CountViews   int64          `json:"countViews"`
-	Replies      []*ThreadReply `json:"replies"`
-	Timestamp    int64          `json:"timestamp"`
+	Type         string         `json:"_",firestore:"_"`
+	Parent       string         `json:"parent",firestore:"parent"`
+	ID           string         `json:"id",firestore:"id"`
+	Creator      ForumUser      `json:"creator",firestore:"creator"`
+	Title        string         `json:"title",firestore:"title"`
+	CountReplies int64          `json:"countReplies",firestore:"countReplies"`
+	CountViews   int64          `json:"countViews",firestore:"countviews"`
+	Replies      []*ThreadReply `json:"replies",firestore:"replies"`
+	Timestamp    int64          `json:"timestamp",firestore:"timestamp"`
 }
 
 func (thread *Thread) Reply(user *ForumUser, content string) *ThreadReply {
@@ -85,10 +85,10 @@ func (thread *Thread) Reply(user *ForumUser, content string) *ThreadReply {
 }
 
 type ThreadReply struct {
-	ID        string    `json:"id"`
-	Creator   ForumUser `json:"creator"`
-	Content   string    `json:"content"`
-	Timestamp int64     `json:"timestamp"`
+	ID        string    `json:"id",firestore:"id"`
+	Creator   ForumUser `json:"creator",firestore:"creator"`
+	Content   string    `json:"content",firestore:"content"`
+	Timestamp int64     `json:"timestamp",firestore:"timestamp"`
 }
 
 func (reply *ThreadReply) ThreadID() string {
