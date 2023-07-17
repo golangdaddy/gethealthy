@@ -45,7 +45,7 @@ func NewForumUser(email, name, avatar string) *ForumUser {
 
 type ForumUser struct {
 	ID        string   `json:"id"`
-	Email     string   `json:"_"`
+	Email     string   `json:"email"`
 	Name      string   `json:"name"`
 	Avatar    string   `json:"avatar"`
 	Following []string `json:"following"`
