@@ -13,10 +13,6 @@ func getTime() int64 {
 	return time.Now().UTC().Unix()
 }
 
-type OTP struct {
-	Email string
-}
-
 func AssertKeyValue(w http.ResponseWriter, m map[string]interface{}, key string) (string, bool) {
 	s, ok := m[key].(string)
 	if !ok {
