@@ -10,7 +10,7 @@ import (
 )
 
 // GetOTPUser does get OTP record from firestore
-func GetOTPUser(app *common.App, r *http.Request) (*models.ForumUser, error) {
+func GetOTP(app *common.App, r *http.Request) (*models.OTP, error) {
 	otp, err := cloudfunc.QueryParam(r, "otp")
 	if err != nil {
 		return nil, err
@@ -20,9 +20,6 @@ func GetOTPUser(app *common.App, r *http.Request) (*models.ForumUser, error) {
 	if err != nil {
 		return nil, err
 	}
-	user := &models.ForumUser{}
-	if err := doc.DataTo(&user); err != nil {
-		return nil, err
-	}
-	return user, nil
+	otpRecord := &models.OTP{}
+	return otpRecord, doc.DataTo(&otpRecord)
 }
