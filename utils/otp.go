@@ -9,17 +9,21 @@ import (
 	"github.com/sirchorg/go/common"
 )
 
-// GetOTPUser does get OTP record from firestore
+// GetOTP gets OTP record from firestore
 func GetOTP(app *common.App, r *http.Request) (*models.OTP, error) {
+
 	otp, err := cloudfunc.QueryParam(r, "otp")
 	if err != nil {
 		return nil, err
 	}
-	firestoreDoc := app.Firestore().Collection("otp").Doc(otp)
-	doc, err := firestoreDoc.Get(context.Background())
+
+	hashedOTP := app.SeedDigest(otp)
+
+	doc, err := app.Firestore().Collection("otp").Doc(hashedOTP).Get(context.Background())
 	if err != nil {
 		return nil, err
 	}
+
 	otpRecord := &models.OTP{}
 	return otpRecord, doc.DataTo(&otpRecord)
 }
