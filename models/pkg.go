@@ -42,6 +42,8 @@ type ForumUser struct {
 	ID        string   `json:"id" firestore:"id"`
 	Email     string   `json:"email" firestore:"email"`
 	Name      string   `json:"name" firestore:"name"`
+	Firstname string   `json:"firstname" firestore:"firstname"`
+	Lastname  string   `json:"lastname" firestore:"lastname"`
 	Avatar    string   `json:"avatar" firestore:"avatar"`
 	Following []string `json:"following" firestore:"following"`
 	OTP       string   `json:"-" firestore:"otp"`
