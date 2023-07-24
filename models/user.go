@@ -30,6 +30,7 @@ type Internals struct {
 		Followers int64
 		Views     int64
 		Likes     int64
+		Replies   int64
 	}
 }
 

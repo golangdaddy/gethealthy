@@ -9,6 +9,7 @@ import (
 
 func (user *User) NewThread(parent, title string) *Thread {
 	return &Thread{
+		Internals: NewInternals(),
 		ID:        uuid.NewString(),
 		Creator:   *user,
 		Title:     title,
@@ -18,15 +19,14 @@ func (user *User) NewThread(parent, title string) *Thread {
 }
 
 type Thread struct {
-	Type         string         `json:"-" firestore:"-"`
-	Parent       string         `json:"parent" firestore:"parent"`
-	ID           string         `json:"id" firestore:"id"`
-	Creator      User           `json:"creator" firestore:"creator"`
-	Title        string         `json:"title" firestore:"title"`
-	CountReplies int64          `json:"countReplies" firestore:"countReplies"`
-	CountViews   int64          `json:"countViews" firestore:"countviews"`
-	Replies      []*ThreadReply `json:"replies" firestore:"replies"`
-	Timestamp    int64          `json:"timestamp" firestore:"timestamp"`
+	Internals
+	Type      string         `json:"-" firestore:"-"`
+	Parent    string         `json:"parent" firestore:"parent"`
+	ID        string         `json:"id" firestore:"id"`
+	Creator   User           `json:"creator" firestore:"creator"`
+	Title     string         `json:"title" firestore:"title"`
+	Replies   []*ThreadReply `json:"replies" firestore:"replies"`
+	Timestamp int64          `json:"timestamp" firestore:"timestamp"`
 }
 
 func (thread *Thread) Reply(user *User, content string) *ThreadReply {
