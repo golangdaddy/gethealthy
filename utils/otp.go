@@ -9,6 +9,12 @@ import (
 	"github.com/sirchorg/go/common"
 )
 
+const (
+	CONST_COL_SESSION = "sessions"
+	CONST_COL_OTP     = "otp"
+	CONST_COL_USER    = "users"
+)
+
 // GetOTP gets OTP record from firestore
 func GetOTP(app *common.App, r *http.Request) (*models.OTP, error) {
 
@@ -21,7 +27,7 @@ func GetOTP(app *common.App, r *http.Request) (*models.OTP, error) {
 	id := app.SeedDigest(otp)
 
 	// fetch the OTP record
-	doc, err := app.Firestore().Collection("otp").Doc(id).Get(ctx)
+	doc, err := app.Firestore().Collection(CONST_COL_OTP).Doc(id).Get(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -32,7 +38,7 @@ func GetOTP(app *common.App, r *http.Request) (*models.OTP, error) {
 	}
 
 	// delete the OTP record
-	if _, err := app.Firestore().Collection("otp").Doc(id).Delete(ctx); err != nil {
+	if _, err := app.Firestore().Collection(CONST_COL_OTP).Doc(id).Delete(ctx); err != nil {
 		return nil, err
 	}
 
@@ -49,9 +55,39 @@ func CreateSessionSecret(app *common.App, otp *models.OTP) (string, error) {
 	session := models.NewSession(otp.Username)
 
 	// create the firestore session record
-	if _, err := app.Firestore().Collection("session").Doc(hashedSecret).Set(ctx, session); err != nil {
+	if _, err := app.Firestore().Collection(CONST_COL_SESSION).Doc(hashedSecret).Set(ctx, session); err != nil {
 		return "", err
 	}
 
 	return secret, nil
+}
+
+func GetSessionUser(app *common.App, r *http.Request) (*models.User, error) {
+
+	ctx := context.Background()
+
+	apiKey := r.Header.Get("Authorization")
+	id := app.SeedDigest(apiKey)
+
+	// fetch the Session record
+	doc, err := app.Firestore().Collection(CONST_COL_SESSION).Doc(id).Get(ctx)
+	if err != nil {
+		return nil, err
+	}
+	session := &models.Session{}
+	if err := doc.DataTo(&session); err != nil {
+		return nil, err
+	}
+
+	// fetch the user record
+	doc, err = app.Firestore().Collection(CONST_COL_USER).Doc(id).Get(ctx)
+	if err != nil {
+		return nil, err
+	}
+	user := &models.User{}
+	if err := doc.DataTo(&user); err != nil {
+		return nil, err
+	}
+
+	return user, nil
 }
