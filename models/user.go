@@ -1,33 +1,55 @@
 package models
 
-import "github.com/google/uuid"
+import (
+	"time"
 
-func DemoUser() *ForumUser {
-	return NewForumUser("john@doe.com", "john doe", "https://image.com/a")
+	"github.com/google/uuid"
+)
+
+func DemoUser() *User {
+	return NewUser("john@doe.com", "john doe")
 }
 
-func NewForumUser(email, name, avatar string) *ForumUser {
-	return &ForumUser{
-		ID:        uuid.NewString(),
-		Email:     email,
-		Name:      name,
-		Avatar:    avatar,
-		Following: []string{},
-		Timestamp: getTime(),
+func NewInternals() Internals {
+	i := Internals{}
+	i.Created = time.Now().UTC().Unix()
+	return i
+}
+
+type Internals struct {
+	Moderation struct {
+		Blocked  bool
+		Approved bool
+	}
+	Searchable bool
+	Created    int64
+	Modified   int64
+	Stats      struct {
+		Followers int64
+		Views     int64
+		Likes     int64
 	}
 }
 
-type ForumUser struct {
-	ID string `json:"id" firestore:"id"`
-	// user or business
-	Type        string   `json:"type" firestore:"type"`
-	Email       string   `json:"email" firestore:"email"`
-	Name        string   `json:"name" firestore:"name"`
-	Firstname   string   `json:"firstname" firestore:"firstname"`
-	Lastname    string   `json:"lastname" firestore:"lastname"`
-	Description string   `json:"description" firestore:"description"`
-	Avatar      string   `json:"avatar" firestore:"avatar"`
-	Following   []string `json:"following" firestore:"following"`
-	OTP         string   `json:"-" firestore:"otp"`
-	Timestamp   int64    `json:"timestamp" firestore:"timestamp"`
+func (i *Internals) Modify() {
+	i.Modified = time.Now().UTC().Unix()
+}
+
+func NewUser(email, username string) *User {
+	return &User{
+		Internals: NewInternals(),
+		ID:        uuid.NewString(),
+		Email:     email,
+		Username:  username,
+	}
+}
+
+type User struct {
+	Internals
+	ID string
+	// user (0) or practitioner (1) or business (2)
+	Account  int      `json:"account" firestore:"account"`
+	Email    string   `json:"email" firestore:"email"`
+	Username string   `json:"username" firestore:"username"`
+	Profiles Profiles `json:"profiles" firestore:"profiles"`
 }

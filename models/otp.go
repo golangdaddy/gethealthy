@@ -21,11 +21,11 @@ func NewOTP(email, username string) *OTP {
 	}
 }
 
-func (otp *OTP) User(app *common.App) (*ForumUser, error) {
+func (otp *OTP) User(app *common.App) (*User, error) {
 	doc, err := app.Firestore().Collection("users").Doc(otp.Username).Get(context.Background())
 	if err != nil {
 		return nil, err
 	}
-	user := &ForumUser{}
+	user := &User{}
 	return user, doc.DataTo(user)
 }

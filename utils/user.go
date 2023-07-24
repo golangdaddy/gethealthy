@@ -9,7 +9,7 @@ import (
 	"google.golang.org/api/iterator"
 )
 
-func GetUserByEmail(app *common.App, email string) (*models.ForumUser, error) {
+func GetUserByEmail(app *common.App, email string) (*models.User, error) {
 
 	iter := app.Firestore().Collection("users").Where("email", "==", email).Documents(context.Background())
 	for {
@@ -20,7 +20,7 @@ func GetUserByEmail(app *common.App, email string) (*models.ForumUser, error) {
 		if err != nil {
 			return nil, err
 		}
-		user := &models.ForumUser{}
+		user := &models.User{}
 		return user, doc.DataTo(user)
 	}
 
