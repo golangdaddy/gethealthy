@@ -20,13 +20,12 @@ func (user *User) NewThread(parent, title string) *Thread {
 
 type Thread struct {
 	Internals
-	Type      string         `json:"-" firestore:"-"`
-	Parent    string         `json:"parent" firestore:"parent"`
-	ID        string         `json:"id" firestore:"id"`
-	Creator   User           `json:"creator" firestore:"creator"`
-	Title     string         `json:"title" firestore:"title"`
-	Replies   []*ThreadReply `json:"replies" firestore:"replies"`
-	Timestamp int64          `json:"timestamp" firestore:"timestamp"`
+	Type      string `json:"-" firestore:"-"`
+	Parent    string `json:"parent" firestore:"parent"`
+	ID        string `json:"id" firestore:"id"`
+	Creator   User   `json:"creator" firestore:"creator"`
+	Title     string `json:"title" firestore:"title"`
+	Timestamp int64  `json:"timestamp" firestore:"timestamp"`
 }
 
 func (thread *Thread) Reply(user *User, content string) *ThreadReply {

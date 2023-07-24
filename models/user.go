@@ -1,6 +1,7 @@
 package models
 
 import (
+	"log"
 	"regexp"
 	"strings"
 	"time"
@@ -58,6 +59,8 @@ type User struct {
 }
 
 func (user *User) IsValid() bool {
+	log.Println(user.Username)
+
 	if len(user.Username) < 6 {
 		return false
 	}
