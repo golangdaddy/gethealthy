@@ -1,6 +1,8 @@
 package models
 
 import (
+	"regexp"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -52,4 +54,24 @@ type User struct {
 	Email    string   `json:"email" firestore:"email"`
 	Username string   `json:"username" firestore:"username"`
 	Profiles Profiles `json:"profiles" firestore:"profiles"`
+}
+
+func (user *User) IsValid() bool {
+	if len(user.Username) < 6 {
+		return false
+	}
+	if len(user.Username) > 24 {
+		return false
+	}
+	if strings.Contains(user.Username, " ") {
+		return false
+	}
+	if !isAlphanumeric(strings.Replace(user.Username, "_", "", -1)) {
+		return false
+	}
+	return true
+}
+
+func isAlphanumeric(word string) bool {
+	return regexp.MustCompile(`^[a-zA-Z0-9]*$`).MatchString(word)
 }
