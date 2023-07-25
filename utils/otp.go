@@ -45,6 +45,31 @@ func GetOTP(app *common.App, r *http.Request) (*models.OTP, error) {
 	return otpRecord, nil
 }
 
+// GetOTP gets OTP record from firestore
+func DebugGetOTP(app *common.App, r *http.Request) (*models.OTP, error) {
+
+	ctx := context.Background()
+
+	otp, err := cloudfunc.QueryParam(r, "otp")
+	if err != nil {
+		return nil, err
+	}
+	id := app.SeedDigest(otp)
+
+	// fetch the OTP record
+	doc, err := app.Firestore().Collection(CONST_COL_OTP).Doc(id).Get(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	otpRecord := &models.OTP{}
+	if err := doc.DataTo(&otpRecord); err != nil {
+		return nil, err
+	}
+
+	return otpRecord, nil
+}
+
 func CreateSessionSecret(app *common.App, otp *models.OTP) (string, error) {
 
 	ctx := context.Background()
