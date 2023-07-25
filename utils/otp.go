@@ -70,7 +70,7 @@ func DebugGetOTP(app *common.App, r *http.Request) (*models.OTP, error) {
 	return otpRecord, nil
 }
 
-func CreateSessionSecret(app *common.App, otp *models.OTP) (string, error) {
+func CreateSessionSecret(app *common.App, otp *models.OTP) (string, int64, error) {
 
 	ctx := context.Background()
 
@@ -81,10 +81,10 @@ func CreateSessionSecret(app *common.App, otp *models.OTP) (string, error) {
 
 	// create the firestore session record
 	if _, err := app.Firestore().Collection(CONST_COL_SESSION).Doc(hashedSecret).Set(ctx, session); err != nil {
-		return "", err
+		return "", 0, err
 	}
 
-	return secret, nil
+	return secret, session.Expires, nil
 }
 
 func GetSessionUser(app *common.App, r *http.Request) (*models.User, error) {
