@@ -11,7 +11,7 @@ func (user *User) NewThread(parent, title string) *Thread {
 	return &Thread{
 		Internals: NewInternals(),
 		ID:        uuid.NewString(),
-		Creator:   *user,
+		Username:  user.Username,
 		Title:     title,
 		Parent:    parent,
 		Timestamp: getTime(),
@@ -23,7 +23,7 @@ type Thread struct {
 	Type      string `json:"-" firestore:"-"`
 	Parent    string `json:"parent" firestore:"parent"`
 	ID        string `json:"id" firestore:"id"`
-	Creator   User   `json:"creator" firestore:"creator"`
+	Username  string `json:"username" firestore:"username"`
 	Title     string `json:"title" firestore:"title"`
 	Timestamp int64  `json:"timestamp" firestore:"timestamp"`
 }
