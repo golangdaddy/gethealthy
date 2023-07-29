@@ -10,6 +10,7 @@ type Mail struct {
 	Recipient string `json:"recipient" firestore:"recipient"`
 	Subject   string `json:"subject" firestore:"subject"`
 	Body      string `json:"body" firestore:"body"`
+	Timestamp int64  `json:"timestamp" firestore:"timestamp"`
 }
 
 func (user *User) NewMail(app *common.App, recipient *User) *Mail {
@@ -17,5 +18,6 @@ func (user *User) NewMail(app *common.App, recipient *User) *Mail {
 		ID:        app.Token256(),
 		Sender:    user.Username,
 		Recipient: recipient.Username,
+		Timestamp: app.TimeNow().Unix(),
 	}
 }
