@@ -31,7 +31,7 @@ type Thread struct {
 func (thread *Thread) Reply(user *User, content string) *ThreadReply {
 	return &ThreadReply{
 		ID:        fmt.Sprintf("%s_%s", thread.ID, uuid.NewString()),
-		Creator:   *user,
+		Username:  user.Username,
 		Content:   content,
 		Timestamp: getTime(),
 	}
@@ -39,7 +39,7 @@ func (thread *Thread) Reply(user *User, content string) *ThreadReply {
 
 type ThreadReply struct {
 	ID        string `json:"id" firestore:"id"`
-	Creator   User   `json:"creator"  firestore:"creator"`
+	Username  string `json:"username" firestore:"username"`
 	Content   string `json:"content" firestore:"content"`
 	Timestamp int64  `json:"timestamp" firestore:"timestamp"`
 }
