@@ -2,6 +2,7 @@ package utils
 
 import (
 	"context"
+	"errors"
 	"net/http"
 
 	"github.com/golangdaddy/gethealthy/models"
@@ -92,6 +93,10 @@ func GetSessionUser(app *common.App, r *http.Request) (*models.User, error) {
 	ctx := context.Background()
 
 	apiKey := r.Header.Get("Authorization")
+	if len(apiKey) == 0 {
+		err := errors.New("missing apikey in Authorization header")
+		return nil, err
+	}
 	id := app.SeedDigest(apiKey)
 
 	// fetch the Session record
