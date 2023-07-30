@@ -105,7 +105,7 @@ func GetSessionUser(app *common.App, r *http.Request) (*models.User, error) {
 	}
 
 	// fetch the user record
-	doc, err = app.Firestore().Collection(CONST_COL_USER).Doc(id).Get(ctx)
+	doc, err = app.Firestore().Collection(CONST_COL_USER).Doc(session.Username).Get(ctx)
 	if err != nil {
 		return nil, err
 	}
