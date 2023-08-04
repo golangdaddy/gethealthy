@@ -32,4 +32,5 @@ type SocialProfile struct {
 	Meta        string `json:"meta" firestore:"meta"`
 	MetaThreads string `json:"metathreads" firestore:"metathreads"`
 	Twitter     string `json:"twitter" firestore:"twitter"`
+	What3Words  string `json:"w3w" firestore:"w3w"`
 }
