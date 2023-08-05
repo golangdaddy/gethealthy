@@ -2,16 +2,22 @@ package models
 
 type Profiles struct {
 	Social       SocialProfile       `json:"social" firestore:"social"`
+	Personal     PersonalProfile     `json:"personal" firestore:"personal"`
 	Practitioner PractitionerProfile `json:"practitioner" firestore:"practitioner"`
 	Business     BusinessProfile     `json:"business" firestore:"business"`
 }
 
+type PersonalProfile struct {
+	Firstname string `json:"firstname" firestore:"firstname"`
+	Lastname  string `json:"lastname" firestore:"lastname"`
+	Phone     string `json:"phone" firestore:"phone"`
+}
+
 type PractitionerProfile struct {
 	Internals
-	Image       string   `json:"image" firestore:"image"`
-	Firstname   string   `json:"firstname" firestore:"firstname"`
-	Lastname    string   `json:"lastname" firestore:"lastname"`
 	Description string   `json:"description" firestore:"description"`
+	Phone       string   `json:"phone" firestore:"phone"`
+	Website     string   `json:"website" firestore:"website"`
 	Keywords    []string `json:"keywords" firestore:"keywords"`
 }
 
@@ -19,6 +25,8 @@ type BusinessProfile struct {
 	Internals
 	Name    string `json:"name" firestore:"name"`
 	Address string `json:"address" firestore:"address"`
+	Phone   string `json:"phone" firestore:"phone"`
+	Website string `json:"website" firestore:"website"`
 	VAT     string `json:"vat" firestore:"vat"`
 }
 
