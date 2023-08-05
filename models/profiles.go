@@ -8,6 +8,7 @@ type Profiles struct {
 }
 
 type PersonalProfile struct {
+	Internals
 	Firstname string `json:"firstname" firestore:"firstname"`
 	Lastname  string `json:"lastname" firestore:"lastname"`
 	Phone     string `json:"phone" firestore:"phone"`
