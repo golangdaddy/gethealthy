@@ -24,11 +24,12 @@ type PractitionerProfile struct {
 
 type BusinessProfile struct {
 	Internals
-	Name    string `json:"name" firestore:"name"`
-	Address string `json:"address" firestore:"address"`
-	Phone   string `json:"phone" firestore:"phone"`
-	Website string `json:"website" firestore:"website"`
-	VAT     string `json:"vat" firestore:"vat"`
+	Name        string `json:"name" firestore:"name"`
+	Description string `json:"description" firestore:"description"`
+	Address     string `json:"address" firestore:"address"`
+	Phone       string `json:"phone" firestore:"phone"`
+	Website     string `json:"website" firestore:"website"`
+	VAT         string `json:"vat" firestore:"vat"`
 }
 
 type SocialProfile struct {
