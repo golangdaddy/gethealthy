@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/google/uuid"
@@ -30,7 +29,9 @@ type Thread struct {
 
 func (thread *Thread) Reply(user *User, content string) *ThreadReply {
 	return &ThreadReply{
-		ID:        fmt.Sprintf("%s_%s", thread.ID, uuid.NewString()),
+		ID:        uuid.NewString(),
+		Thread:    thread.ID,
+		Title:     thread.Title,
 		Username:  user.Username,
 		Content:   content,
 		Timestamp: getTime(),
@@ -40,6 +41,8 @@ func (thread *Thread) Reply(user *User, content string) *ThreadReply {
 type ThreadReply struct {
 	Meta      Internals
 	ID        string `json:"id" firestore:"id"`
+	Thread    string `json:"thread" firestore:"thread"`
+	Title     string `json:"title" firestore:"title"`
 	Username  string `json:"username" firestore:"username"`
 	Content   string `json:"content" firestore:"content"`
 	Timestamp int64  `json:"timestamp" firestore:"timestamp"`
