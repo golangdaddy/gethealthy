@@ -3,6 +3,7 @@ package models
 import "github.com/google/uuid"
 
 type Group struct {
+	Meta        Internals
 	ID          string `json:"id" firestore:"id"`
 	Region      string `json:"region" firestore:"region"`
 	Admin       string `json:"admin" firestore:"admin"`

@@ -8,14 +8,14 @@ type Profiles struct {
 }
 
 type PersonalProfile struct {
-	Internals
+	Meta      Internals
 	Firstname string `json:"firstname" firestore:"firstname"`
 	Lastname  string `json:"lastname" firestore:"lastname"`
 	Phone     string `json:"phone" firestore:"phone"`
 }
 
 type PractitionerProfile struct {
-	Internals
+	Meta        Internals
 	Description string   `json:"description" firestore:"description"`
 	Phone       string   `json:"phone" firestore:"phone"`
 	Website     string   `json:"website" firestore:"website"`
@@ -23,7 +23,7 @@ type PractitionerProfile struct {
 }
 
 type BusinessProfile struct {
-	Internals
+	Meta        Internals
 	Name        string `json:"name" firestore:"name"`
 	Description string `json:"description" firestore:"description"`
 	Address     string `json:"address" firestore:"address"`
@@ -33,13 +33,11 @@ type BusinessProfile struct {
 }
 
 type SocialProfile struct {
-	Internals
 	Facebook    string `json:"facebook" firestore:"facebook"`
 	Telegram    string `json:"telegram" firestore:"telegram"`
 	WhatsApp    string `json:"whatsapp" firestore:"whatsapp"`
 	Instagram   string `json:"instagram" firestore:"instagram"`
 	Snapchat    string `json:"snapchat" firestore:"snapchat"`
-	Meta        string `json:"meta" firestore:"meta"`
 	MetaThreads string `json:"metathreads" firestore:"metathreads"`
 	Twitter     string `json:"twitter" firestore:"twitter"`
 	What3Words  string `json:"w3w" firestore:"w3w"`

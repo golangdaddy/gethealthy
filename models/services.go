@@ -1,7 +1,7 @@
 package models
 
 type Service struct {
-	Internals
+	Meta        Internals
 	ID          string   `json:"id" firestore:"id"`
 	User        string   `json:"user" firestore:"user"`
 	Name        string   `json:"name" firestore:"name"`

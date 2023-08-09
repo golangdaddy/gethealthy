@@ -42,16 +42,16 @@ func (i *Internals) Modify() {
 
 func NewUser(email, username string) *User {
 	return &User{
-		Internals: NewInternals(),
-		ID:        uuid.NewString(),
-		Email:     email,
-		Username:  username,
+		Meta:     NewInternals(),
+		ID:       uuid.NewString(),
+		Email:    email,
+		Username: username,
 	}
 }
 
 type User struct {
-	Internals
-	ID string
+	Meta Internals
+	ID   string
 	// user (0) or practitioner (1) or business (2)
 	Account  int      `json:"account" firestore:"account"`
 	Email    string   `json:"email" firestore:"email"`

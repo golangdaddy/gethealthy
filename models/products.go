@@ -1,7 +1,7 @@
 package models
 
 type Product struct {
-	Internals
+	Meta         Internals
 	ID           string  `json:"id" firestore:"id"`
 	Manufacturer string  `json:"manufacturer" firestore:"manufacturer"`
 	Name         string  `json:"name" firestore:"name"`

@@ -9,7 +9,7 @@ import (
 
 func (user *User) NewThread(parent, title string) *Thread {
 	return &Thread{
-		Internals: NewInternals(),
+		Meta:      NewInternals(),
 		ID:        uuid.NewString(),
 		Username:  user.Username,
 		Title:     title,
@@ -19,7 +19,7 @@ func (user *User) NewThread(parent, title string) *Thread {
 }
 
 type Thread struct {
-	Internals
+	Meta      Internals
 	Type      string `json:"-" firestore:"-"`
 	Parent    string `json:"parent" firestore:"parent"`
 	ID        string `json:"id" firestore:"id"`
@@ -38,6 +38,7 @@ func (thread *Thread) Reply(user *User, content string) *ThreadReply {
 }
 
 type ThreadReply struct {
+	Meta      Internals
 	ID        string `json:"id" firestore:"id"`
 	Username  string `json:"username" firestore:"username"`
 	Content   string `json:"content" firestore:"content"`
