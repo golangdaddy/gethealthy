@@ -13,6 +13,7 @@ func DemoUser() *User {
 	return NewUser("john@doe.com", "john doe")
 }
 
+// NewInternals returns a boilerplate internal object
 func NewInternals() Internals {
 	i := Internals{}
 	i.Created = time.Now().UTC().Unix()
@@ -52,11 +53,10 @@ type User struct {
 	Internals
 	ID string
 	// user (0) or practitioner (1) or business (2)
-	Account     int      `json:"account" firestore:"account"`
-	Email       string   `json:"_" firestore:"email"`
-	HashedEmail string   `json:"hashedEmail" firestore:"hashedEmail"`
-	Username    string   `json:"username" firestore:"username"`
-	Profiles    Profiles `json:"profiles" firestore:"profiles"`
+	Account  int      `json:"account" firestore:"account"`
+	Email    string   `json:"email" firestore:"email"`
+	Username string   `json:"username" firestore:"username"`
+	Profiles Profiles `json:"profiles" firestore:"profiles"`
 }
 
 func (user *User) IsValid() bool {
