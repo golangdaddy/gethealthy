@@ -18,6 +18,7 @@ type Group struct {
 
 func NewPrivateGroup(admin, region, name, descr string) *Group {
 	return &Group{
+		Meta:        NewInternals(),
 		ID:          uuid.NewString(),
 		Region:      region,
 		Admin:       admin,
@@ -28,6 +29,7 @@ func NewPrivateGroup(admin, region, name, descr string) *Group {
 
 func NewPublicGroup(admin, region, name, descr string) *Group {
 	return &Group{
+		Meta:        NewInternals(),
 		ID:          uuid.NewString(),
 		Open:        true,
 		Region:      region,
