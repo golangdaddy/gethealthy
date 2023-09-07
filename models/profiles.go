@@ -1,7 +1,7 @@
 package models
 
 type Profiles struct {
-	Social       SocialProfile       `json:"social" firestore:"social"`
+	Social       Socials             `json:"socials" firestore:"socials"`
 	Personal     PersonalProfile     `json:"personal" firestore:"personal"`
 	Practitioner PractitionerProfile `json:"practitioner" firestore:"practitioner"`
 	Business     BusinessProfile     `json:"business" firestore:"business"`
@@ -32,13 +32,13 @@ type BusinessProfile struct {
 	VAT         string `json:"vat" firestore:"vat"`
 }
 
-type SocialProfile struct {
+type Socials struct {
 	Facebook    string `json:"facebook" firestore:"facebook"`
 	Telegram    string `json:"telegram" firestore:"telegram"`
 	WhatsApp    string `json:"whatsapp" firestore:"whatsapp"`
 	Instagram   string `json:"instagram" firestore:"instagram"`
 	Snapchat    string `json:"snapchat" firestore:"snapchat"`
 	MetaThreads string `json:"metathreads" firestore:"metathreads"`
-	Twitter     string `json:"twitter" firestore:"twitter"`
+	X           string `json:"x" firestore:"x"`
 	What3Words  string `json:"w3w" firestore:"w3w"`
 }
