@@ -21,15 +21,15 @@ func NewTopic(name, description string) *Topic {
 type TopicUpdate struct {
 	Meta     Internals
 	Username string       `json:"username" firestore:"username"`
-	Content  string       `json:"content" firestore:"content"`
+	Update   string       `json:"update" firestore:"update"`
 	Media    []*MediaFile `json:"media" firestore:"media"`
 }
 
-func (user *User) NewTopicUpdate(content string, mediaFiles ...*MediaFile) *TopicUpdate {
+func (user *User) NewTopicUpdate(update string, mediaFiles ...*MediaFile) *TopicUpdate {
 	return &TopicUpdate{
 		Meta:     NewInternals(),
 		Username: user.Username,
-		Content:  content,
+		Update:   update,
 		Media:    mediaFiles,
 	}
 }
