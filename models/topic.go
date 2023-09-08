@@ -20,6 +20,7 @@ func NewTopic(name, description string) *Topic {
 
 type TopicUpdate struct {
 	Meta     Internals
+	ID       string       `json:"id" firestore:"id"`
 	Username string       `json:"username" firestore:"username"`
 	Update   string       `json:"update" firestore:"update"`
 	Media    []*MediaFile `json:"media" firestore:"media"`
@@ -28,6 +29,7 @@ type TopicUpdate struct {
 func (user *User) NewTopicUpdate(update string, mediaFiles ...*MediaFile) *TopicUpdate {
 	return &TopicUpdate{
 		Meta:     NewInternals(),
+		ID:       uuid.NewString(),
 		Username: user.Username,
 		Update:   update,
 		Media:    mediaFiles,
