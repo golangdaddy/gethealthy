@@ -38,6 +38,7 @@ func (user *User) NewTopicUpdate(update string, mediaFiles ...*MediaFile) *Topic
 
 type TopicQuestion struct {
 	Meta     Internals
+	ID       string `json:"id" firestore:"id"`
 	Username string `json:"username" firestore:"username"`
 	Question string `json:"question" firestore:"question"`
 }
@@ -45,6 +46,7 @@ type TopicQuestion struct {
 func (user *User) NewTopicQuestion(question string) *TopicQuestion {
 	return &TopicQuestion{
 		Meta:     NewInternals(),
+		ID:       uuid.NewString(),
 		Username: user.Username,
 		Question: question,
 	}
