@@ -17,3 +17,19 @@ func NewTopic(name, description string) *Topic {
 		Description: description,
 	}
 }
+
+type ExperienceUpdate struct {
+	Meta     Internals
+	Username string       `json:"username" firestore:"username"`
+	Content  string       `json:"content" firestore:"content"`
+	Media    []*MediaFile `json:"media" firestore:"media"`
+}
+
+func (user *User) NewExperienceUpdate(content string, mediaFiles ...*MediaFile) *ExperienceUpdate {
+	return &ExperienceUpdate{
+		Meta:     NewInternals(),
+		Username: user.Username,
+		Content:  content,
+		Media:    mediaFiles,
+	}
+}
