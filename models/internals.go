@@ -14,9 +14,14 @@ func NewInternals() Internals {
 }
 
 type Internals struct {
+	Country    string
 	Moderation struct {
-		Blocked  bool
-		Approved bool
+		Blocked      bool
+		BlockedTime  int64
+		BlockedBy    string
+		Approved     bool
+		ApprovedTime int64
+		ApprovedBy   string
 	}
 	Searchable bool
 	Created    int64
@@ -26,6 +31,7 @@ type Internals struct {
 		Views     int64
 		Likes     int64
 		Replies   int64
+		Children  int64
 	}
 }
 
