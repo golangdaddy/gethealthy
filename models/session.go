@@ -3,13 +3,13 @@ package models
 import "time"
 
 type Session struct {
-	Username string
-	Expires  int64
+	UserID  string
+	Expires int64
 }
 
-func NewSession(username string) *Session {
+func (user *User) NewSession() *Session {
 	return &Session{
-		Username: username,
-		Expires:  time.Now().UTC().Unix(),
+		UserID:  user.ID,
+		Expires: time.Now().UTC().Unix(),
 	}
 }

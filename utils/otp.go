@@ -78,7 +78,12 @@ func CreateSessionSecret(app *common.App, otp *models.OTP) (string, int64, error
 	secret := app.Token256()
 	hashedSecret := app.SeedDigest(secret)
 
-	session := models.NewSession(otp.Username)
+	user, err := otp.GetUser(app)
+	if err != nil {
+		return "", 0, err
+	}
+
+	session := user.NewSession()
 
 	// create the firestore session record
 	if _, err := app.Firestore().Collection(CONST_COL_SESSION).Doc(hashedSecret).Set(ctx, session); err != nil {
@@ -110,7 +115,7 @@ func GetSessionUser(app *common.App, r *http.Request) (*models.User, error) {
 	}
 
 	// fetch the user record
-	doc, err = app.Firestore().Collection(CONST_COL_USER).Doc(session.Username).Get(ctx)
+	doc, err = app.Firestore().Collection(CONST_COL_USER).Doc(session.UserID).Get(ctx)
 	if err != nil {
 		return nil, err
 	}

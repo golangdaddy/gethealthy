@@ -9,20 +9,20 @@ import (
 
 type OTP struct {
 	Email     string `json:"email" firestore:"email"`
-	Username  string `json:"username" firestore:"username"`
+	User      string `json:"user" firestore:"user"`
 	Timestamp int64  `json:"timestamp" firestore:"timestamp"`
 }
 
-func NewOTP(email, username string) *OTP {
+func NewOTP(email, userID string) *OTP {
 	return &OTP{
 		Email:     email,
-		Username:  username,
+		User:      userID,
 		Timestamp: time.Now().UTC().Unix(),
 	}
 }
 
-func (otp *OTP) User(app *common.App) (*User, error) {
-	doc, err := app.Firestore().Collection("users").Doc(otp.Username).Get(context.Background())
+func (otp *OTP) GetUser(app *common.App) (*User, error) {
+	doc, err := app.Firestore().Collection("users").Doc(otp.User).Get(context.Background())
 	if err != nil {
 		return nil, err
 	}
