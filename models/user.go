@@ -13,12 +13,16 @@ func DemoUser() *User {
 }
 
 func NewUser(email, username string) *User {
-	return &User{
+	user := &User{
 		Meta:     NewInternals(),
 		ID:       uuid.NewString(),
 		Email:    email,
 		Username: username,
 	}
+	user.Profiles.Business.Meta = user.Meta
+	user.Profiles.Practitioner.Meta = user.Meta
+	user.Profiles.Personal.Meta = user.Meta
+	return user
 }
 
 type User struct {
