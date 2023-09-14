@@ -5,6 +5,7 @@ import (
 )
 
 type Mail struct {
+	Meta      Internals
 	ID        string `json:"id" firestore:"id"`
 	Sender    string `json:"sender" firestore:"sender"`
 	Recipient string `json:"recipient" firestore:"recipient"`
@@ -15,6 +16,7 @@ type Mail struct {
 
 func (user *User) NewMail(app *common.App, recipient *User) *Mail {
 	return &Mail{
+		Meta:      NewInternals(),
 		ID:        app.Token256(),
 		Sender:    user.Username,
 		Recipient: recipient.Username,
