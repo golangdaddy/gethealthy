@@ -8,6 +8,11 @@ import (
 	"github.com/google/uuid"
 )
 
+type UserRef struct {
+	ID       string
+	Username string
+}
+
 func DemoUser() *User {
 	return NewUser("john@doe.com", "john doe")
 }
@@ -33,6 +38,13 @@ type User struct {
 	Email    string   `json:"email" firestore:"email"`
 	Username string   `json:"username" firestore:"username"`
 	Profiles Profiles `json:"profiles" firestore:"profiles"`
+}
+
+func (user *User) Ref() UserRef {
+	return UserRef{
+		ID:       user.ID,
+		Username: user.Username,
+	}
 }
 
 func (user *User) IsValid() bool {
