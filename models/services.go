@@ -1,9 +1,19 @@
 package models
 
+import "github.com/google/uuid"
+
+func (user *User) NewService() *Service {
+	return &Service{
+		Meta: NewInternals(),
+		User: user.Ref(),
+		ID:   uuid.NewString(),
+	}
+}
+
 type Service struct {
 	Meta        Internals
+	User        UserRef
 	ID          string   `json:"id" firestore:"id"`
-	User        string   `json:"user" firestore:"user"`
 	Name        string   `json:"name" firestore:"name"`
 	Image       string   `json:"image" firestore:"image"`
 	Description string   `json:"description" firestore:"description"`

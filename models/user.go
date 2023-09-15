@@ -9,6 +9,7 @@ import (
 )
 
 type UserRef struct {
+	Account  int
 	ID       string
 	Username string
 }
@@ -42,6 +43,7 @@ type User struct {
 
 func (user *User) Ref() UserRef {
 	return UserRef{
+		Account:  user.Account,
 		ID:       user.ID,
 		Username: user.Username,
 	}

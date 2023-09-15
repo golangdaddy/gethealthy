@@ -19,25 +19,26 @@ func NewTopic(name, description string) *Topic {
 }
 
 type TopicUpdate struct {
-	Meta     Internals
-	ID       string       `json:"id" firestore:"id"`
-	Username string       `json:"username" firestore:"username"`
-	Update   string       `json:"update" firestore:"update"`
-	Media    []*MediaFile `json:"media" firestore:"media"`
+	Meta   Internals
+	User   UserRef
+	ID     string       `json:"id" firestore:"id"`
+	Update string       `json:"update" firestore:"update"`
+	Media  []*MediaFile `json:"media" firestore:"media"`
 }
 
 func (user *User) NewTopicUpdate(update string, mediaFiles ...*MediaFile) *TopicUpdate {
 	return &TopicUpdate{
-		Meta:     NewInternals(),
-		ID:       uuid.NewString(),
-		Username: user.Username,
-		Update:   update,
-		Media:    mediaFiles,
+		Meta:   NewInternals(),
+		User:   user.Ref(),
+		ID:     uuid.NewString(),
+		Update: update,
+		Media:  mediaFiles,
 	}
 }
 
 type TopicQuestion struct {
 	Meta     Internals
+	User     UserRef
 	ID       string `json:"id" firestore:"id"`
 	Username string `json:"username" firestore:"username"`
 	Question string `json:"question" firestore:"question"`
@@ -46,8 +47,8 @@ type TopicQuestion struct {
 func (user *User) NewTopicQuestion(question string) *TopicQuestion {
 	return &TopicQuestion{
 		Meta:     NewInternals(),
+		User:     user.Ref(),
 		ID:       uuid.NewString(),
-		Username: user.Username,
 		Question: question,
 	}
 }

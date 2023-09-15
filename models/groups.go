@@ -12,33 +12,33 @@ type Group struct {
 		Meetings bool `json:"meetings" firestore:"meetings"`
 		Events   bool `json:"events" firestore:"events"`
 	} `json:"features" firestore:"features"`
-	Region      string   `json:"region" firestore:"region"`
-	Admin       string   `json:"admin" firestore:"admin"`
-	Moderators  []string `json:"moderators" firestore:"moderators"`
-	Name        string   `json:"name" firestore:"name"`
-	Description string   `json:"description" firestore:"description"`
-	Email       string   `json:"email" firestore:"email"`
-	Website     string   `json:"website" firestore:"website"`
+	Region      string    `json:"region" firestore:"region"`
+	Admins      []UserRef `json:"admins" firestore:"admins"`
+	Moderators  []UserRef `json:"moderators" firestore:"moderators"`
+	Name        string    `json:"name" firestore:"name"`
+	Description string    `json:"description" firestore:"description"`
+	Email       string    `json:"email" firestore:"email"`
+	Website     string    `json:"website" firestore:"website"`
 	Socials
 }
 
-func NewPrivateGroup(admin, region, name, descr string) *Group {
+func NewPrivateGroup(user *User, region, name, descr string) *Group {
 	return &Group{
 		Meta:        NewInternals(),
 		ID:          uuid.NewString(),
 		Region:      region,
-		Admin:       admin,
+		Admins:      []UserRef{user.Ref()},
 		Name:        name,
 		Description: descr,
 	}
 }
 
-func NewPublicGroup(admin, region, name, descr string) *Group {
+func NewPublicGroup(user *User, region, name, descr string) *Group {
 	group := &Group{
 		Meta:        NewInternals(),
 		ID:          uuid.NewString(),
 		Region:      region,
-		Admin:       admin,
+		Admins:      []UserRef{user.Ref()},
 		Name:        name,
 		Description: descr,
 	}

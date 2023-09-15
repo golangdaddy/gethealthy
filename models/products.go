@@ -4,8 +4,8 @@ import "github.com/google/uuid"
 
 type Product struct {
 	Meta         Internals
+	User         UserRef
 	ID           string  `json:"id" firestore:"id"`
-	Vendor       string  `json:"vendor" firestore:"vendor"`
 	Name         string  `json:"name" firestore:"name"`
 	Description  string  `json:"description" firestore:"description"`
 	Price        float64 `json:"price" firestore:"price"`
@@ -22,8 +22,8 @@ type Product struct {
 
 func (user *User) NewProduct() *Product {
 	return &Product{
-		Meta:   NewInternals(),
-		ID:     uuid.NewString(),
-		Vendor: user.ID,
+		Meta: NewInternals(),
+		User: user.Ref(),
+		ID:   uuid.NewString(),
 	}
 }
