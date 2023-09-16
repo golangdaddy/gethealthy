@@ -22,8 +22,8 @@ func NewUser(email, username string) *User {
 	user := &User{
 		Meta:     NewInternals(),
 		ID:       uuid.NewString(),
-		Email:    email,
-		Username: username,
+		Email:    strings.ToLower(strings.TrimSpace(email)),
+		Username: strings.ToLower(strings.TrimSpace(username)),
 	}
 	user.Profiles.Business.Meta = user.Meta
 	user.Profiles.Practitioner.Meta = user.Meta
