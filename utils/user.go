@@ -9,8 +9,8 @@ import (
 	"google.golang.org/api/iterator"
 )
 
-func GetUser(app *common.App, username string) (*models.User, error) {
-	doc, err := app.Firestore().Collection("users").Doc(username).Get(context.Background())
+func GetUser(app *common.App, ref models.UserRef) (*models.User, error) {
+	doc, err := app.Firestore().Collection("users").Doc(ref.ID).Get(context.Background())
 	if err != nil {
 		return nil, err
 	}
