@@ -19,5 +19,5 @@ func (user *User) GetUsernameRef() *Username {
 
 type Username struct {
 	User  UserRef
-	Index map[string][]string
+	Index map[string][]string `json:"-"`
 }
