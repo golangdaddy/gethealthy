@@ -4,7 +4,7 @@ import "strconv"
 
 func (user *User) GetUsernameRef() *Username {
 	ref := &Username{
-		ID:    user.ID,
+		User:  user.Ref(),
 		Index: map[string][]string{},
 	}
 	max := len(user.Username)
@@ -18,6 +18,6 @@ func (user *User) GetUsernameRef() *Username {
 }
 
 type Username struct {
-	ID    string
+	User  UserRef
 	Index map[string][]string
 }
