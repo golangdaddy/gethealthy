@@ -40,7 +40,6 @@ type TopicQuestion struct {
 	Meta     Internals
 	User     UserRef
 	ID       string `json:"id" firestore:"id"`
-	Username string `json:"username" firestore:"username"`
 	Question string `json:"question" firestore:"question"`
 }
 
