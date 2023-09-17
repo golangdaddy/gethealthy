@@ -6,12 +6,10 @@ type Group struct {
 	Meta Internals
 	ID   string `json:"id" firestore:"id"`
 	// controls whether anyone can instantly join a group
-	Features struct {
-		Open     bool `json:"open" firestore:"open"`
-		Forum    bool `json:"forum" firestore:"forum"`
-		Meetings bool `json:"meetings" firestore:"meetings"`
-		Events   bool `json:"events" firestore:"events"`
-	} `json:"features" firestore:"features"`
+	Open        bool      `json:"open" firestore:"open"`
+	Threads     bool      `json:"threads" firestore:"threads"`
+	Meetings    bool      `json:"meetings" firestore:"meetings"`
+	Events      bool      `json:"events" firestore:"events"`
 	Region      string    `json:"region" firestore:"region"`
 	Admins      []UserRef `json:"admins" firestore:"admins"`
 	Moderators  []UserRef `json:"moderators" firestore:"moderators"`
@@ -42,6 +40,6 @@ func NewPublicGroup(user *User, region, name, descr string) *Group {
 		Name:        name,
 		Description: descr,
 	}
-	group.Features.Open = true
+	group.Open = true
 	return group
 }
