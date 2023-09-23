@@ -4,10 +4,16 @@ import (
 	"context"
 	"fmt"
 
+	"cloud.google.com/go/firestore"
 	"github.com/golangdaddy/gethealthy/models"
 	"github.com/sirchorg/go/common"
 	"google.golang.org/api/iterator"
 )
+
+// UserCollection abstracts the handling of subdata to within the user objectz
+func UserCollection(app *common.App, user *models.User, collectionID string) *firestore.CollectionRef {
+	return app.Firestore().Collection("users").Doc(user.ID).Collection(collectionID)
+}
 
 func GetUser(app *common.App, ref models.UserRef) (*models.User, error) {
 	doc, err := app.Firestore().Collection("users").Doc(ref.ID).Get(context.Background())
