@@ -10,9 +10,14 @@ import (
 	"google.golang.org/api/iterator"
 )
 
-// UserCollection abstracts the handling of subdata to within the user objectz
+// UserCollection abstracts the handling of subdata to within the user object
 func UserCollection(app *common.App, user *models.User, collectionID string) *firestore.CollectionRef {
 	return app.Firestore().Collection("users").Doc(user.ID).Collection(collectionID)
+}
+
+// RegionCollection abstracts the handling of subdata to within the country/region
+func RegionCollection(app *common.App, user *models.User, collectionID string) *firestore.CollectionRef {
+	return app.Firestore().Collection("countries").Doc(user.Meta.Country).Collection("regions").Doc(user.Meta.Region).Collection(collectionID)
 }
 
 func GetUser(app *common.App, ref models.UserRef) (*models.User, error) {

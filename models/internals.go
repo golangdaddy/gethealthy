@@ -15,6 +15,7 @@ func NewInternals() Internals {
 
 type Internals struct {
 	Country    string
+	Region     string
 	Moderation struct {
 		Blocked      bool
 		BlockedTime  int64
