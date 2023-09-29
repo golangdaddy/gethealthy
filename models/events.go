@@ -1,14 +1,24 @@
 package models
 
+import (
+	"log"
+
+	"github.com/google/uuid"
+)
+
 // NewEvent constructs the event object
-func (group *Group) NewEvent(name, description string, start int64, options EventOptions) *Event {
-	return &Event{
+func (group *Group) NewEvent(name, description string, start int64, options EventOptions) (event *Event) {
+	event = &Event{
 		Meta:        NewInternals(),
+		Options:     options,
 		Group:       group.ID,
+		ID:          uuid.NewString(),
 		Name:        name,
 		Description: description,
 		Time:        start,
 	}
+	log.Println(*event)
+	return
 }
 
 type Event struct {
