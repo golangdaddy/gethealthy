@@ -1,7 +1,7 @@
 package models
 
 // NewEvent constructs the event object
-func (group *Group) NewEvent(name, description string, start int64) *Event {
+func (group *Group) NewEvent(name, description string, start int64, options EventOptions) *Event {
 	return &Event{
 		Meta:        NewInternals(),
 		Group:       group.ID,
@@ -13,6 +13,7 @@ func (group *Group) NewEvent(name, description string, start int64) *Event {
 
 type Event struct {
 	Meta        Internals
+	Options     EventOptions
 	Group       string  `json:"group" firestore:"group"`
 	ID          string  `json:"id" firestore:"id"`
 	Name        string  `json:"name" firestore:"name"`
@@ -23,4 +24,13 @@ type Event struct {
 	Time        int64   `json:"time" firestore:"time"`
 	// hours
 	Duration float64 `json:"duration" firestore:"duration"`
+}
+
+type EventOptions struct {
+	// is visible to general search
+	Public bool
+	// costs no money
+	Free bool
+	// for accessibility
+	DisabledAccess bool
 }

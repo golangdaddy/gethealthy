@@ -4,27 +4,27 @@ import "github.com/google/uuid"
 
 type Group struct {
 	Meta        Internals
-	ID          string       `json:"id" firestore:"id"`
-	Options     GroupOptions `json:"options" firestore:"options"`
-	Region      string       `json:"region" firestore:"region"`
-	Admins      []UserRef    `json:"admins" firestore:"admins"`
-	Moderators  []UserRef    `json:"moderators" firestore:"moderators"`
-	Name        string       `json:"name" firestore:"name"`
-	Description string       `json:"description" firestore:"description"`
-	Email       string       `json:"email" firestore:"email"`
-	Website     string       `json:"website" firestore:"website"`
+	Options     GroupOptions
+	ID          string    `json:"id" firestore:"id"`
+	Region      string    `json:"region" firestore:"region"`
+	Admins      []UserRef `json:"admins" firestore:"admins"`
+	Moderators  []UserRef `json:"moderators" firestore:"moderators"`
+	Name        string    `json:"name" firestore:"name"`
+	Description string    `json:"description" firestore:"description"`
+	Email       string    `json:"email" firestore:"email"`
+	Website     string    `json:"website" firestore:"website"`
 	Socials
 }
 
 type GroupOptions struct {
 	// controls whether anyone can instantly join a group
-	Open bool `json:"open" firestore:"open"`
+	Open bool
 	// has threads
-	Threads bool `json:"threads" firestore:"threads"`
+	Threads bool
 	// has meetings
-	Meetings bool `json:"meetings" firestore:"meetings"`
+	Meetings bool
 	// has events
-	Events bool `json:"events" firestore:"events"`
+	Events bool
 }
 
 func NewGroup(user *User, region, name, descr string, options GroupOptions) *Group {
