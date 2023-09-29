@@ -27,7 +27,7 @@ type GroupOptions struct {
 	Events bool `json:"events" firestore:"events"`
 }
 
-func NewPrivateGroup(user *User, region, name, descr string) *Group {
+func NewGroup(user *User, region, name, descr string, options GroupOptions) *Group {
 	return &Group{
 		Meta:        NewInternals(),
 		ID:          uuid.NewString(),
@@ -35,18 +35,6 @@ func NewPrivateGroup(user *User, region, name, descr string) *Group {
 		Admins:      []UserRef{user.Ref()},
 		Name:        name,
 		Description: descr,
+		Options:     options,
 	}
-}
-
-func NewPublicGroup(user *User, region, name, descr string) *Group {
-	group := &Group{
-		Meta:        NewInternals(),
-		ID:          uuid.NewString(),
-		Region:      region,
-		Admins:      []UserRef{user.Ref()},
-		Name:        name,
-		Description: descr,
-	}
-	group.Options.Open = true
-	return group
 }
