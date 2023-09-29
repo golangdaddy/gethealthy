@@ -4,6 +4,7 @@ package models
 func (group *Group) NewEvent(name, description string, start int64) *Event {
 	return &Event{
 		Meta:        NewInternals(),
+		Group:       group.ID,
 		Name:        name,
 		Description: description,
 		Time:        start,
