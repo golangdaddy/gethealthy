@@ -6,6 +6,13 @@ import (
 	"github.com/google/uuid"
 )
 
+type EventType string
+
+const (
+	Retreat  EventType = "retreat"
+	Festival EventType = "festival"
+)
+
 // NewEvent constructs the event object
 func (group *Group) NewEvent(name, description string, start int64, options EventOptions) (event *Event) {
 	event = &Event{
@@ -24,6 +31,7 @@ func (group *Group) NewEvent(name, description string, start int64, options Even
 type Event struct {
 	Meta        Internals
 	Options     EventOptions
+	Online      OnlineEvent
 	Group       string  `json:"group" firestore:"group"`
 	ID          string  `json:"id" firestore:"id"`
 	Name        string  `json:"name" firestore:"name"`
@@ -37,10 +45,36 @@ type Event struct {
 }
 
 type EventOptions struct {
+	// Event type
+	Type string
 	// is visible to general search
 	Public bool
 	// costs no money
 	Free bool
+	//
+	EventType string
 	// for accessibility
 	DisabledAccess bool
+}
+
+type OnlineEvent struct {
+	OnlineReadme    string
+	MeetingID       string
+	MeetingPassword string
+	Link            string
+	Phone           string
+}
+
+type EventChatMessage struct {
+	Meta    Internals
+	Event   string
+	Message string
+}
+
+func (event *Event) NewMessage(msg string) *EventChatMessage {
+	return &EventChatMessage{
+		Meta:    NewInternals(),
+		Event:   event.ID,
+		Message: msg,
+	}
 }
