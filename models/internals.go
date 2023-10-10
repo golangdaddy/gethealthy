@@ -14,6 +14,7 @@ func NewInternals() Internals {
 }
 
 type Internals struct {
+	Parent     string
 	Country    string
 	Region     string
 	Moderation struct {

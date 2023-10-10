@@ -9,14 +9,17 @@ type Content struct {
 
 type Status struct {
 	Meta    Internals
+	User    UserRef
 	ID      string    `json:"id" firestore:"id"`
 	Content []Content `json:"content" firestore:"content"`
 }
 
-func (user *User) NewStatus(content ...Content) *Status {
-	return &Status{
+func (user *User) NewStatus(parent string, content ...Content) *Status {
+	status := &Status{
 		Meta:    NewInternals(),
 		ID:      uuid.NewString(),
 		Content: content,
 	}
+	status.Meta.Parent = parent
+	return status
 }
