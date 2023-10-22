@@ -37,13 +37,12 @@ func (thread *Thread) Reply(user *User, content string) *ThreadReply {
 }
 
 type ThreadReply struct {
-	Meta     Internals
-	User     UserRef
-	ID       string `json:"id" firestore:"id"`
-	Thread   string `json:"thread" firestore:"thread"`
-	Title    string `json:"title" firestore:"title"`
-	Username string `json:"username" firestore:"username"`
-	Content  string `json:"content" firestore:"content"`
+	Meta    Internals
+	User    UserRef
+	ID      string `json:"id" firestore:"id"`
+	Thread  string `json:"thread" firestore:"thread"`
+	Title   string `json:"title" firestore:"title"`
+	Content string `json:"content" firestore:"content"`
 }
 
 func (reply *ThreadReply) ThreadID() string {
