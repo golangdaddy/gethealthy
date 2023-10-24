@@ -46,19 +46,21 @@ type Meeting struct {
 	Title   string  `json:"title" firestore:"title"`
 	Address string  `json:"address" firestore:"address"`
 	Cost    float64 `json:"cost" firestore:"cost"`
-	Start   string  `json:"start" firestore:"start"`
+	Date    string  `json:"date" firestore:"date"`
+	Time    string  `json:"time" firestore:"time"`
 	// number of minutes
 	Duration int `json:"duration" firestore:"duration"`
 }
 
-func (group *Group) NewMeeting(title, address string, cost float64, start string, duration int) *Meeting {
+func (group *Group) NewMeeting(title, address string, cost float64, date, time string, duration int) *Meeting {
 	meeting := &Meeting{
 		Meta:     NewInternals(),
 		ID:       uuid.NewString(),
 		Title:    title,
 		Address:  address,
 		Cost:     cost,
-		Start:    start,
+		Date:     date,
+		Time:     title,
 		Duration: duration,
 	}
 	meeting.Meta.Parent = group.ID
