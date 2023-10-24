@@ -38,3 +38,29 @@ func NewGroup(user *User, region, name, descr string, options GroupOptions) *Gro
 		Options:     options,
 	}
 }
+
+type Meeting struct {
+	Meta    Internals
+	Options GroupOptions
+	ID      string  `json:"id" firestore:"id"`
+	Title   string  `json:"title" firestore:"title"`
+	Address string  `json:"address" firestore:"address"`
+	Cost    float64 `json:"cost" firestore:"cost"`
+	Start   string  `json:"start" firestore:"start"`
+	// number of minutes
+	Duration int `json:"duration" firestore:"duration"`
+}
+
+func (group *Group) NewMeeting(user *User, title, address string, cost float64, start string, duration int) *Meeting {
+	meeting := &Meeting{
+		Meta:     NewInternals(),
+		ID:       uuid.NewString(),
+		Title:    title,
+		Address:  address,
+		Cost:     cost,
+		Start:    start,
+		Duration: duration,
+	}
+	meeting.Meta.Parent = group.ID
+	return meeting
+}
