@@ -31,3 +31,13 @@ func AssertKeyValueFloat(w http.ResponseWriter, m map[string]interface{}, key st
 	}
 	return f, true
 }
+
+func AssertKeyValueBool(w http.ResponseWriter, m map[string]interface{}, key string) (bool, bool) {
+	v, ok := m[key].(bool)
+	if !ok {
+		err := fmt.Errorf("'%s' is required for this request", key)
+		cloudfunc.HttpError(w, err, http.StatusBadRequest)
+		return false, false
+	}
+	return v, true
+}
