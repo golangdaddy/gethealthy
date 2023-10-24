@@ -51,7 +51,7 @@ type Meeting struct {
 	Duration int `json:"duration" firestore:"duration"`
 }
 
-func (group *Group) NewMeeting(user *User, title, address string, cost float64, start string, duration int) *Meeting {
+func (group *Group) NewMeeting(title, address string, cost float64, start string, duration int) *Meeting {
 	meeting := &Meeting{
 		Meta:     NewInternals(),
 		ID:       uuid.NewString(),
