@@ -60,7 +60,7 @@ func (group *Group) NewMeeting(title, address string, cost float64, date, time s
 		Address:  address,
 		Cost:     cost,
 		Date:     date,
-		Time:     title,
+		Time:     time,
 		Duration: duration,
 	}
 	meeting.Meta.Parent = group.ID
