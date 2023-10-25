@@ -37,12 +37,12 @@ type MeetingComment struct {
 	Content string `json:"content" firestore:"content"`
 }
 
-func (group *Group) MeetingComment(content string) *MeetingComment {
+func (meeting *Meeting) MeetingComment(content string) *MeetingComment {
 	comment := &MeetingComment{
 		Meta:    NewInternals(),
 		ID:      uuid.NewString(),
 		Content: content,
 	}
-	comment.Meta.Parent = group.ID
+	comment.Meta.Parent = meeting.ID
 	return comment
 }
