@@ -37,7 +37,7 @@ type MeetingComment struct {
 	Content string `json:"content" firestore:"content"`
 }
 
-func (meeting *Meeting) MeetingComment(user *User, content string) *MeetingComment {
+func (meeting *Meeting) NewComment(user *User, content string) *MeetingComment {
 	comment := &MeetingComment{
 		Meta:    NewInternals(),
 		User:    user.Ref(),
