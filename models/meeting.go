@@ -1,33 +1,63 @@
 package models
 
-import "github.com/google/uuid"
+import (
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/google/uuid"
+)
 
 type Meeting struct {
-	Meta    Internals
-	Options GroupOptions
-	ID      string  `json:"id" firestore:"id"`
-	Title   string  `json:"title" firestore:"title"`
-	Address string  `json:"address" firestore:"address"`
-	Cost    float64 `json:"cost" firestore:"cost"`
-	Date    string  `json:"date" firestore:"date"`
-	Time    string  `json:"time" firestore:"time"`
+	Meta      Internals
+	Options   GroupOptions
+	ID        string  `json:"id" firestore:"id"`
+	Title     string  `json:"title" firestore:"title"`
+	Address   string  `json:"address" firestore:"address"`
+	Cost      float64 `json:"cost" firestore:"cost"`
+	Date      string  `json:"date" firestore:"date"`
+	Time      string  `json:"time" firestore:"time"`
+	Timestamp int64   `json:"timestamp" firestore:"timestamp"`
 	// number of minutes
 	Duration int `json:"duration" firestore:"duration"`
 }
 
-func (group *Group) NewMeeting(title, address string, cost float64, date, time string, duration int) *Meeting {
+func (group *Group) NewMeeting(title, address string, cost float64, date, theTime string, duration int) (*Meeting, error) {
+
+	t, err := time.Parse("Fri Oct 20 2023 00:00:00 GMT+0100", date)
+	if err != nil {
+		return nil, err
+	}
+
+	hs := strings.Split(theTime, ":")
+	hours, err := strconv.Atoi(hs[0])
+	if err != nil {
+		return nil, err
+	}
+	minutes, err := strconv.Atoi(hs[1])
+	if err != nil {
+		return nil, err
+	}
+	for x := 0; x < hours; x++ {
+		t.Add(time.Hour)
+	}
+	for x := 0; x < minutes; x++ {
+		t.Add(time.Minute)
+	}
 	meeting := &Meeting{
-		Meta:     NewInternals(),
-		ID:       uuid.NewString(),
-		Title:    title,
-		Address:  address,
-		Cost:     cost,
-		Date:     date,
-		Time:     time,
-		Duration: duration,
+		Meta:    NewInternals(),
+		ID:      uuid.NewString(),
+		Title:   title,
+		Address: address,
+		Cost:    cost,
+		Date:    date,
+		Time:    theTime,
+		// use this for db order-by queries
+		Timestamp: t.UTC().Unix(),
+		Duration:  duration,
 	}
 	meeting.Meta.Parent = group.ID
-	return meeting
+	return meeting, nil
 }
 
 type MeetingComment struct {
