@@ -24,7 +24,7 @@ type Meeting struct {
 
 func (group *Group) NewMeeting(title, address string, cost float64, date, theTime string, duration int) (*Meeting, error) {
 
-	t, err := time.Parse("2023-10-06T23:00:00.000Z", date)
+	t, err := time.Parse("2006-01-02T15:04:05.000Z", date)
 	if err != nil {
 		return nil, err
 	}
