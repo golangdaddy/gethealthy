@@ -21,7 +21,11 @@ func RegionCollection(app *common.App, user *models.User, collectionID string) *
 }
 
 func GetUser(app *common.App, ref models.UserRef) (*models.User, error) {
-	doc, err := app.Firestore().Collection("users").Doc(ref.ID).Get(context.Background())
+	return GetUserByID(app, ref.ID)
+}
+
+func GetUserByID(app *common.App, id string) (*models.User, error) {
+	doc, err := app.Firestore().Collection("users").Doc(id).Get(context.Background())
 	if err != nil {
 		return nil, err
 	}

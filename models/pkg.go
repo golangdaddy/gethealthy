@@ -22,6 +22,26 @@ func AssertKeyValue(w http.ResponseWriter, m map[string]interface{}, key string)
 	return s, true
 }
 
+func AssertArrayOfStrings(w http.ResponseWriter, m map[string]interface{}, key string) ([]string, bool) {
+	a, ok := m[key].([]interface{})
+	if !ok {
+		err := fmt.Errorf("'%s' is required for this request", key)
+		cloudfunc.HttpError(w, err, http.StatusBadRequest)
+		return nil, false
+	}
+	b := []string{}
+	for _, v := range a {
+		s, ok := v.(string)
+		if !ok {
+			err := fmt.Errorf("strings are required for this request", key)
+			cloudfunc.HttpError(w, err, http.StatusBadRequest)
+			return nil, false
+		}
+		b = append(b, s)
+	}
+	return b, true
+}
+
 func AssertKeyValueFloat(w http.ResponseWriter, m map[string]interface{}, key string) (float64, bool) {
 	f, ok := m[key].(float64)
 	if !ok {

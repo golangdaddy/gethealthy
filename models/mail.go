@@ -1,6 +1,7 @@
 package models
 
 import (
+	"github.com/google/uuid"
 	"github.com/sirchorg/go/common"
 )
 
@@ -11,15 +12,15 @@ type Mail struct {
 	Recipients []UserRef `json:"recipients" firestore:"recipients"`
 	Subject    string    `json:"subject" firestore:"subject"`
 	Body       string    `json:"body" firestore:"body"`
-	Timestamp  int64     `json:"timestamp" firestore:"timestamp"`
 }
 
-func (user *User) NewMail(app *common.App, recipient *User) *Mail {
+func (user *User) NewMail(app *common.App, subject, body string, recipients ...*User) *Mail {
 	return &Mail{
 		Meta:       NewInternals(),
-		ID:         app.Token256(),
+		ID:         uuid.NewString(),
 		Sender:     user.Ref(),
-		Recipients: []UserRef{user.Ref()},
-		Timestamp:  app.TimeNow().Unix(),
+		Recipients: Users(recipients).Refs(),
+		Subject:    subject,
+		Body:       body,
 	}
 }

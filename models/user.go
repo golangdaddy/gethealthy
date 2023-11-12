@@ -8,6 +8,8 @@ import (
 	"github.com/google/uuid"
 )
 
+type Users []*User
+
 type UserRef struct {
 	Account  int
 	ID       string
@@ -47,6 +49,14 @@ func (user *User) Ref() UserRef {
 		ID:       user.ID,
 		Username: user.Username,
 	}
+}
+
+func (users Users) Refs() []UserRef {
+	refs := []UserRef{}
+	for _, user := range users {
+		refs = append(refs, user.Ref())
+	}
+	return refs
 }
 
 func (user *User) IsValid() bool {
