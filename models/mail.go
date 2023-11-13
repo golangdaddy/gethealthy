@@ -33,7 +33,7 @@ type MailReply struct {
 	Body       string    `json:"body" firestore:"body"`
 }
 
-func (user *User) NewMailReply(op *Mail, body string) *MailReply {
+func (user *User) NewMailReply(op *Mail, body string, additionalRecipients ...UserRef) *MailReply {
 	mail := &MailReply{
 		Meta:       NewInternals("mailreply"),
 		ID:         uuid.NewString(),
@@ -43,6 +43,7 @@ func (user *User) NewMailReply(op *Mail, body string) *MailReply {
 		Body:       body,
 	}
 	mail.Meta.Parent = op.ID
+	mail.Recipients = append(mail.Recipients, additionalRecipients...)
 	// ensure no duplicate recipients
 	filter := map[string]UserRef{}
 	for _, r := range mail.Recipients {
