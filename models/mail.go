@@ -43,10 +43,10 @@ func (user *User) NewMailReply(op *Mail, body string, additionalRecipients ...Us
 		Body:       body,
 	}
 	mail.Meta.Parent = op.ID
-	mail.Recipients = append(mail.Recipients, additionalRecipients...)
 	// ensure no duplicate recipients
 	filter := map[string]UserRef{}
-	for _, r := range mail.Recipients {
+	// merge existing recipients with additional ones
+	for _, r := range append(mail.Recipients, additionalRecipients...) {
 		filter[r.ID] = r
 	}
 	mail.Recipients = make([]UserRef, len(filter))
