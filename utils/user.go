@@ -12,7 +12,11 @@ import (
 
 // UserCollection abstracts the handling of subdata to within the user object
 func UserCollection(app *common.App, user *models.User, collectionID string) *firestore.CollectionRef {
-	return app.Firestore().Collection("users").Doc(user.ID).Collection(collectionID)
+	return UserRefCollection(app, user.Ref(), collectionID)
+}
+
+func UserRefCollection(app *common.App, userRef models.UserRef, collectionID string) *firestore.CollectionRef {
+	return app.Firestore().Collection("users").Doc(userRef.ID).Collection(collectionID)
 }
 
 // RegionCollection abstracts the handling of subdata to within the country/region
