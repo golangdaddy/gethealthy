@@ -29,6 +29,7 @@ type MailReply struct {
 	ID         string    `json:"id" firestore:"id"`
 	Sender     UserRef   `json:"sender" firestore:"sender"`
 	Recipients []UserRef `json:"recipients" firestore:"recipients"`
+	Subject    string    `json:"subject" firestore:"subject"`
 	Body       string    `json:"body" firestore:"body"`
 }
 
@@ -38,6 +39,7 @@ func (user *User) NewMailReply(op *Mail, body string) *MailReply {
 		ID:         uuid.NewString(),
 		Sender:     user.Ref(),
 		Recipients: op.Recipients,
+		Subject:    op.Subject,
 		Body:       body,
 	}
 	mail.Meta.Parent = op.ID
