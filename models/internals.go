@@ -27,6 +27,7 @@ type Internals struct {
 		ApprovedTime int64
 		ApprovedBy   string
 	}
+	Updated    bool
 	Searchable bool
 	Created    int64
 	Modified   int64
@@ -39,6 +40,13 @@ type Internals struct {
 	}
 }
 
+// Modify updates the timestamp
 func (i *Internals) Modify() {
 	i.Modified = time.Now().UTC().Unix()
+}
+
+// Update sets the metadata to indicate it has updated for a user
+func (i *Internals) Update() {
+	i.Updated = true
+	i.Modify()
 }
