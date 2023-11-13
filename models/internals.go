@@ -3,17 +3,19 @@ package models
 import "time"
 
 // NewInternals returns a boilerplate internal object
-func NewInternals() Internals {
+func NewInternals(class string) Internals {
 
 	timestamp := time.Now().UTC().Unix()
 
-	i := Internals{}
-	i.Created = timestamp
-	i.Modified = timestamp
-	return i
+	return Internals{
+		Class:    class,
+		Created:  timestamp,
+		Modified: timestamp,
+	}
 }
 
 type Internals struct {
+	Class      string
 	Parent     string
 	Country    string
 	Region     string

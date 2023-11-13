@@ -8,7 +8,7 @@ type MediaFolder struct {
 
 func (user *User) NewMediaFolder(name string) *MediaFolder {
 	return &MediaFolder{
-		Meta: NewInternals(),
+		Meta: NewInternals("mediafolder"),
 		User: user.Ref(),
 		Name: name,
 	}
@@ -25,7 +25,7 @@ type MediaFile struct {
 
 func (folder *MediaFolder) NewMediaFile(user *User, kind, uri, description string) *MediaFile {
 	return &MediaFile{
-		Meta:        NewInternals(),
+		Meta:        NewInternals("mediafile"),
 		User:        user.Ref(),
 		Folder:      folder.Name,
 		Kind:        kind,

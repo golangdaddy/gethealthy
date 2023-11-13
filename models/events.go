@@ -16,7 +16,7 @@ const (
 // NewEvent constructs the event object
 func (group *Group) NewEvent(name, description string, start int64, options EventOptions) (event *Event) {
 	event = &Event{
-		Meta:        NewInternals(),
+		Meta:        NewInternals("event"),
 		Options:     options,
 		Group:       group.ID,
 		ID:          uuid.NewString(),
@@ -73,7 +73,7 @@ type EventChatMessage struct {
 
 func (event *Event) NewMessage(msg string) *EventChatMessage {
 	return &EventChatMessage{
-		Meta:    NewInternals(),
+		Meta:    NewInternals("eventchatmessage"),
 		Event:   event.ID,
 		Message: msg,
 	}

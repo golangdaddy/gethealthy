@@ -22,7 +22,7 @@ type Product struct {
 
 func (user *User) NewProduct() *Product {
 	return &Product{
-		Meta: NewInternals(),
+		Meta: NewInternals("product"),
 		User: user.Ref(),
 		ID:   uuid.NewString(),
 	}

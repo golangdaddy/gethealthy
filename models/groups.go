@@ -29,7 +29,7 @@ type GroupOptions struct {
 
 func NewGroup(user *User, region, name, descr string, options GroupOptions) *Group {
 	return &Group{
-		Meta:        NewInternals(),
+		Meta:        NewInternals("group"),
 		ID:          uuid.NewString(),
 		Region:      region,
 		Admins:      []UserRef{user.Ref()},

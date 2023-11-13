@@ -45,7 +45,7 @@ func (group *Group) NewMeeting(title, address string, cost float64, date, theTim
 		t.Add(time.Minute)
 	}
 	meeting := &Meeting{
-		Meta:    NewInternals(),
+		Meta:    NewInternals("meeting"),
 		ID:      uuid.NewString(),
 		Title:   title,
 		Address: address,
@@ -69,7 +69,7 @@ type MeetingComment struct {
 
 func (meeting *Meeting) NewComment(user *User, content string) *MeetingComment {
 	comment := &MeetingComment{
-		Meta:    NewInternals(),
+		Meta:    NewInternals("meetingcomment"),
 		User:    user.Ref(),
 		ID:      uuid.NewString(),
 		Content: content,

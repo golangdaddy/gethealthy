@@ -4,7 +4,7 @@ import "github.com/google/uuid"
 
 func (user *User) NewService() *Service {
 	return &Service{
-		Meta: NewInternals(),
+		Meta: NewInternals("service"),
 		User: user.Ref(),
 		ID:   uuid.NewString(),
 	}

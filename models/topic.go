@@ -11,7 +11,7 @@ type Topic struct {
 
 func NewTopic(name, description string) *Topic {
 	return &Topic{
-		Meta:        NewInternals(),
+		Meta:        NewInternals("topic"),
 		ID:          uuid.NewString(),
 		Name:        name,
 		Description: description,
@@ -28,7 +28,7 @@ type TopicUpdate struct {
 
 func (user *User) NewTopicUpdate(update string, mediaFiles ...*MediaFile) *TopicUpdate {
 	return &TopicUpdate{
-		Meta:   NewInternals(),
+		Meta:   NewInternals("topicupdate"),
 		User:   user.Ref(),
 		ID:     uuid.NewString(),
 		Update: update,
@@ -45,7 +45,7 @@ type TopicQuestion struct {
 
 func (user *User) NewTopicQuestion(question string) *TopicQuestion {
 	return &TopicQuestion{
-		Meta:     NewInternals(),
+		Meta:     NewInternals("topicquestion"),
 		User:     user.Ref(),
 		ID:       uuid.NewString(),
 		Question: question,

@@ -8,7 +8,7 @@ import (
 
 func (user *User) NewThread(parent, title string) *Thread {
 	return &Thread{
-		Meta:   NewInternals(),
+		Meta:   NewInternals("thread"),
 		User:   user.Ref(),
 		ID:     uuid.NewString(),
 		Title:  title,
@@ -27,7 +27,7 @@ type Thread struct {
 
 func (thread *Thread) Reply(user *User, content string) *ThreadReply {
 	return &ThreadReply{
-		Meta:    NewInternals(),
+		Meta:    NewInternals("threadreply"),
 		User:    user.Ref(),
 		ID:      uuid.NewString(),
 		Thread:  thread.ID,

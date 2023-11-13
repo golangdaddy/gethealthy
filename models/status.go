@@ -16,7 +16,7 @@ type Status struct {
 
 func (user *User) NewStatus(parent string, content ...Content) *Status {
 	status := &Status{
-		Meta:    NewInternals(),
+		Meta:    NewInternals("status"),
 		User:    user.Ref(),
 		ID:      uuid.NewString(),
 		Content: content,
