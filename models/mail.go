@@ -38,10 +38,21 @@ func (user *User) NewMailReply(op *Mail, body string) *MailReply {
 		Meta:       NewInternals("mailreply"),
 		ID:         uuid.NewString(),
 		Sender:     user.Ref(),
-		Recipients: op.Recipients,
+		Recipients: append(op.Recipients, op.Sender),
 		Subject:    op.Subject,
 		Body:       body,
 	}
 	mail.Meta.Parent = op.ID
+	// ensure no duplicate recipients
+	filter := map[string]UserRef{}
+	for _, r := range mail.Recipients {
+		filter[r.ID] = r
+	}
+	mail.Recipients = make([]UserRef, len(filter))
+	var n int
+	for _, recipient := range filter {
+		mail.Recipients[n] = recipient
+		n++
+	}
 	return mail
 }
