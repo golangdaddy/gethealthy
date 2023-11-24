@@ -7,33 +7,34 @@ import (
 )
 
 func (user *User) NewThread(parent, title string) *Thread {
-	return &Thread{
-		Meta:   NewInternals("thread"),
-		User:   user.Ref(),
-		ID:     uuid.NewString(),
-		Title:  title,
-		Parent: parent,
+	t := &Thread{
+		Meta:  NewInternals("thread"),
+		User:  user.Ref(),
+		ID:    uuid.NewString(),
+		Title: title,
 	}
+	t.Meta.Parent = parent
+	return t
 }
 
 type Thread struct {
-	Meta   Internals
-	User   UserRef
-	Type   string `json:"-" firestore:"-"`
-	Parent string `json:"parent" firestore:"parent"`
-	ID     string `json:"id" firestore:"id"`
-	Title  string `json:"title" firestore:"title"`
+	Meta  Internals
+	User  UserRef
+	Type  string `json:"-" firestore:"-"`
+	ID    string `json:"id" firestore:"id"`
+	Title string `json:"title" firestore:"title"`
 }
 
 func (thread *Thread) Reply(user *User, content string) *ThreadReply {
-	return &ThreadReply{
+	r := &ThreadReply{
 		Meta:    NewInternals("threadreply"),
 		User:    user.Ref(),
 		ID:      uuid.NewString(),
-		Thread:  thread.ID,
 		Title:   thread.Title,
 		Content: content,
 	}
+	r.Meta.Parent = thread.ID
+	return r
 }
 
 type ThreadReply struct {
